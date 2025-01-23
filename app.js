@@ -1,12 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const exphbs = require("express-handlebars");
 const path = require("path");
 const { allowedNodeEnvironmentFlags } = require("process");
 
 const app = express();
 const PORT = 3000;
 
+//Set Handlebars as our templating engine
+app.engine("handlebars", exphbs.engine());
+app.set("view engine", "handlebars");
+app.set("views", "./views");
+
+//Sets our static resources folder
 app.use(express.static(path.join(__dirname,"public")));
 
 //Middleware body-parser parses jsons requests
@@ -121,6 +128,14 @@ function tellTheMessage(){
 }
 
 //tellTheMessage();
+
+//Handlebars examples
+app.get("/hbsindex", (req,res)=>{
+    res.render("home", {
+        title:"Welcome to the Handlbars Site",
+        message:"This is our page using the template engine"
+    })
+});
 
 //This is an example of a route
 app.get("/",(req, res)=>{
