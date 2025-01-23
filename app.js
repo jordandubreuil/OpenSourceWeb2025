@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname,"public")));
 
 //Middleware body-parser parses jsons requests
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 //MongoDB Database connection
 const mongoURI = "mongodb://localhost:27017/gamelibrary"
@@ -65,6 +66,7 @@ app.get("/games/:id", async (req,res)=>{
 
 //post route to add data
 app.post("/addgame", async (req,res)=>{
+    console.log(req.body.gamename);
     try{
         const newGame = new Game(req.body);
         const savedGame = await newGame.save();
@@ -137,6 +139,12 @@ app.get("/hbsindex", (req,res)=>{
     })
 });
 
+app.get("/addgame", (req,res)=>{
+    res.render("addgame", {
+        title:"Add a game to the Favorite Game Database",
+        message:"Please add a game."
+    })
+});
 //This is an example of a route
 app.get("/",(req, res)=>{
     res.sendFile(path.join(__dirname, "public", "index.html"));
