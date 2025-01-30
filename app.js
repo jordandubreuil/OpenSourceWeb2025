@@ -51,7 +51,8 @@ app.use((req, res, next)=>{
 });
 
 //Required Route Router Example
-app.use("/", require("./routes/auth"));
+app.use("/", require("./routes/auth").router);
+app.use("/", require("./routes/crud"));
 
 //MongoDB Database connection
 const mongoURI = "mongodb://localhost:27017/gamelibrary"
@@ -172,12 +173,7 @@ app.get("/hbsindex", (req,res)=>{
     })
 });
 
-app.get("/addgame", (req,res)=>{
-    res.render("addgame", {
-        title:"Add a game to the Favorite Game Database",
-        message:"Please add a game."
-    })
-});
+
 //This is an example of a route
 app.get("/",(req, res)=>{
     res.sendFile(path.join(__dirname, "public", "index.html"));
