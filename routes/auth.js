@@ -1,6 +1,49 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const AppUsers = require("../models/AppUsers");
+
+//Register page
+router.get("/register", (req,res)=>{
+    res.render("register")
+})
+
+//Post route to register users
+router.post("/register", async (req,res)=>{
+    const {username, password, password2, email} = req.body;
+    let errors = []
+
+    //Validation checks
+    if(!username || !password || !password2 || !email){
+        errors.push({msg:"Please fill all fields."})
+    }
+
+    if(password !== password2){
+        errors.push({msg:"Passwords do not match."})
+    }
+
+    if(password.length<6){
+        errors.push({msg:"Passwords must be at least 6 characters."})
+    }
+
+    if(errors.length >0){
+        return res.render("register", {errors, username, password, password2, email});
+    }
+
+    const userExists = await AppUsers.findOne({email});
+
+    if(userExists){
+        req.flash("error_msg", "Email for this user already exists.");
+        return res.redirect("/register");
+    }
+
+    const newAppUser = new AppUsers({username, email, password});
+    await newAppUser.save();
+
+    req.flash("success_msg", "You are now a registered user")
+    res.redirect("/login");
+
+})
 
 //login page route
 router.get("/login", (req,res)=>{
