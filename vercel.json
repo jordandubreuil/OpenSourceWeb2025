@@ -1,12 +1,2 @@
-{
-    "version": 2,
-    "functions": {
-      "app.js": {
-        "runtime": "nodejs18.x"
-      }
-    },
-    "routes": [
-      { "src": "/(.*)", "dest": "app.js" }
-    ]
-  }
+{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
   
