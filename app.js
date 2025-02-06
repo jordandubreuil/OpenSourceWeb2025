@@ -12,7 +12,7 @@ const Game = require("./models/Game");
 
 
 const app = express();
-const PORT = 3000;
+// const PORT = 3000;
 
 //Passport Configuration
 require("./config/passport")(passport);
@@ -106,8 +106,8 @@ app.get("/nodemon",(req,res)=>{
 })
 
 //Creates Listener on port 3000
-app.listen(PORT, ()=>{
-    console.log("Server running on port 3000.");
-})
+// app.listen(PORT, ()=>{
+//     console.log("Server running on port 3000.");
+// })
 
 module.exports = app;
