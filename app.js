@@ -10,6 +10,7 @@ const flash = require("connect-flash");
 const { allowedNodeEnvironmentFlags } = require("process");
 const Game = require("./models/Game");
 
+
 const app = express();
 const PORT = 3000;
 
@@ -30,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //Setup Express-Session Middleware
 app.use(session({
-    secret:"secret",
+    secret:process.env.SESSION_SECRET,
     resave:false,
     saveUninitialized:true
 }))
@@ -56,7 +57,8 @@ app.use("/", require("./routes/auth").router);
 app.use("/", require("./routes/crud"));
 
 //MongoDB Database connection
-const mongoURI = "mongodb://localhost:27017/gamelibrary"
+// const mongoURI = "mongodb://localhost:27017/gamelibrary"
+const mongoURI = process.env.MONGO_URI; //||  "mongodb://localhost:27017/gamelibrary"
 mongoose.connect(mongoURI);
 const db = mongoose.connection;
 //check for connection
