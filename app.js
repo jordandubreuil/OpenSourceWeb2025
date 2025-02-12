@@ -23,7 +23,7 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 
 //Sets our static resources folder
-app.use(express.static(path.join(__dirname,"public")));
+//app.use(express.static(path.join(__dirname,"public")));
 
 //Middleware body-parser parses jsons requests
 app.use(bodyParser.json());
